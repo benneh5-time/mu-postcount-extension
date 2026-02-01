@@ -1,0 +1,170 @@
+/**
+ * Thread Post Counter - Overlay Styles
+ * Clean, minimal overlay design that doesn't interfere with forum browsing
+ */
+
+/* Base overlay container */
+.tpc-overlay {
+  position: fixed;
+  z-index: 999999;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  pointer-events: auto;
+  
+  /* Initial state for animation */
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Visible state */
+.tpc-overlay.tpc-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Hiding state */
+.tpc-overlay.tpc-hiding {
+  opacity: 0;
+  transform: translateY(10px) scale(0.98);
+}
+
+/* Position variants */
+.tpc-overlay.tpc-bottom-right {
+  bottom: 24px;
+  right: 24px;
+}
+
+.tpc-overlay.tpc-bottom-left {
+  bottom: 24px;
+  left: 24px;
+}
+
+.tpc-overlay.tpc-top-right {
+  top: 24px;
+  right: 24px;
+}
+
+.tpc-overlay.tpc-top-left {
+  top: 24px;
+  left: 24px;
+}
+
+/* Content container */
+.tpc-content {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 14px 20px;
+  padding-right: 36px; /* Space for close button */
+  
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  box-shadow: 
+    0 4px 24px rgba(0, 0, 0, 0.3),
+    0 1px 3px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+/* Post count number */
+.tpc-count {
+  font-size: 28px;
+  font-weight: 700;
+  color: #4fc3f7;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  
+  /* Subtle glow effect */
+  text-shadow: 0 0 20px rgba(79, 195, 247, 0.4);
+}
+
+/* Label text */
+.tpc-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+  letter-spacing: 0.01em;
+}
+
+/* Error state */
+.tpc-content.tpc-error {
+  background: linear-gradient(135deg, #2d1f1f 0%, #1f1515 100%);
+  border-color: rgba(239, 83, 80, 0.2);
+}
+
+.tpc-content.tpc-error .tpc-text {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.tpc-icon {
+  font-size: 16px;
+}
+
+/* Close button */
+.tpc-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 6px;
+  
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 1;
+  
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.tpc-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.tpc-close:active {
+  transform: scale(0.95);
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .tpc-content {
+    border-color: rgba(255, 255, 255, 0.5);
+  }
+  
+  .tpc-label {
+    color: rgba(255, 255, 255, 0.9);
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .tpc-overlay {
+    transition: opacity 0.15s ease;
+    transform: none !important;
+  }
+  
+  .tpc-overlay.tpc-visible,
+  .tpc-overlay.tpc-hiding {
+    transform: none !important;
+  }
+}
+
+/* Ensure overlay is above common z-index values */
+.tpc-overlay {
+  isolation: isolate;
+}
