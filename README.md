@@ -1,24 +1,27 @@
-# Thread Post Counter - Chrome Extension
+# MU Post Count Extension
 
-A lightweight Chrome extension that shows how many posts you have in the current forum thread as an overlay.
+A Chrome extension that shows how many posts you have in the current forum thread as an overlay.
 
-## Setup Instructions
+## Installation
 
-### 1. Configure Your Username
+1. Download this repository:
+   - Click the green **Code** button above
+   - Select **Download ZIP**
+   - Extract the ZIP to a folder on your computer
 
-Open `content.js` and find the `CONFIG` object near the top:
+2. Open Chrome and go to `chrome://extensions/`
 
-```javascript
-const CONFIG = {
-  username: 'YOUR_USERNAME_HERE',  // ← Change this to your forum username
-  autoHideDelay: 0,                 // Set to milliseconds to auto-hide, 0 = never
-  position: 'bottom-right'          // Options: 'top-right', 'top-left', 'bottom-right', 'bottom-left'
-};
-```
+3. Enable **Developer mode** (toggle in the top right corner)
 
-### 2. Update the Domain
+4. Click **Load unpacked**
 
-In `manifest.json`, replace `domain.com` with your actual forum domain:
+5. Select the extracted folder (the one containing `manifest.json`)
+
+6. Navigate to any forum thread — you'll see your post count in the bottom-right corner
+
+## Configuration
+
+Edit `manifest.json` to set your forum domain:
 
 ```json
 "host_permissions": [
@@ -27,59 +30,43 @@ In `manifest.json`, replace `domain.com` with your actual forum domain:
 "content_scripts": [
   {
     "matches": ["*://*.yourforum.com/forums/threads/*"],
-    ...
-  }
-]
 ```
 
-### 3. Add Icons (Optional)
-
-Create icon images at these sizes and place them in the `icons/` folder:
-- `icon16.png` (16x16 pixels)
-- `icon48.png` (48x48 pixels)
-- `icon128.png` (128x128 pixels)
-
-Or remove the `icons` section from `manifest.json` to use Chrome's default icon.
-
-### 4. Install the Extension
-
-1. Open Chrome and go to `chrome://extensions/`
-2. Enable **Developer mode** (toggle in the top right)
-3. Click **Load unpacked**
-4. Select the `chrome-extension` folder
-
-### 5. Test It
-
-Navigate to a forum thread. You should see an overlay in the bottom-right corner showing your post count.
+Replace `yourforum.com` with the actual domain.
 
 ## How It Works
 
-1. When you visit a thread page matching `/forums/threads/*`, the extension activates
-2. It extracts the thread ID from the URL (handles formats like `/threads/58863-title` or `/threads/58863`)
-3. It fetches the "Who Posted" page at `/forums/misc.php?do=whoposted&t={threadId}`
-4. It parses the HTML to find your username and post count
-5. It displays the count in a non-intrusive overlay
-
-## Customizing the Parser
-
-If the extension shows 0 posts but you know you've posted, the HTML parsing may need adjustment for your specific forum. Open the browser console (F12) to see debug output, then modify the `parsePostCount()` function in `content.js` to match your forum's HTML structure.
-
-## Troubleshooting
-
-- **"Could not load post count"**: Check that the domain in `manifest.json` matches your forum
-- **Shows 0 but you have posts**: The HTML parser may need customization for your forum
-- **Not appearing at all**: Verify the URL pattern in `manifest.json` matches your forum's thread URLs
+1. When you visit a thread, the extension detects your logged-in username from the welcome link
+2. It fetches the "Who Posted" page for that thread
+3. It parses your post count and displays it in an overlay
 
 ## Files
 
 ```
-chrome-extension/
 ├── manifest.json    # Extension configuration
-├── content.js       # Main logic - thread ID extraction, fetching, parsing
-├── overlay.css      # Styling for the post count overlay
-├── icons/           # Extension icons (optional)
-│   ├── icon16.png
-│   ├── icon48.png
-│   └── icon128.png
-└── README.md        # This file
+├── content.js       # Main logic
+├── overlay.css      # Overlay styling
+└── icons/           # Extension icons
 ```
+
+## Updating
+
+To update after a new version is released:
+
+1. Download the new ZIP
+2. Extract it to the same folder (overwrite existing files)
+3. Go to `chrome://extensions/`
+4. Click the refresh icon on the extension card
+
+## Troubleshooting
+
+**Overlay doesn't appear:**
+- Make sure you're logged into the forum
+- Check that the URL pattern in `manifest.json` matches your forum's thread URLs
+
+**Shows wrong count:**
+- Open DevTools (F12) → Console to see debug output
+- The HTML parser may need adjusting for your forum's structure
+
+**"Could not load manifest" error:**
+- Make sure you selected the folder containing `manifest.json`, not a parent folder
