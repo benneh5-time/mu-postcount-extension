@@ -19,21 +19,6 @@ A Chrome extension that shows how many posts you have in the current forum threa
 
 6. Navigate to any forum thread — you'll see your post count in the bottom-right corner
 
-## Configuration
-
-Edit `manifest.json` to set your forum domain:
-
-```json
-"host_permissions": [
-  "*://*.yourforum.com/*"
-],
-"content_scripts": [
-  {
-    "matches": ["*://*.yourforum.com/forums/threads/*"],
-```
-
-Replace `yourforum.com` with the actual domain.
-
 ## How It Works
 
 1. When you visit a thread, the extension detects your logged-in username from the welcome link
